@@ -24,7 +24,7 @@ async function main() {
         await page.goto('https://www.notion.com');
 
         console.log('Logging in');
-        
+
         // Click the login button
         await page.click('text=Log in');
 
@@ -38,7 +38,7 @@ async function main() {
         await googlePage.click('#identifierNext');
         
         // Wait for password field and fill it
-        await googlePage.waitForSelector('input[type="password"]', { state: 'visible' });
+        await googlePage.waitForSelector('input[type="password"]');
         await googlePage.fill('input[type="password"]', process.env.GOOGLE_PASSWORD);
         await googlePage.click('#passwordNext');
 
