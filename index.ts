@@ -23,18 +23,15 @@ async function main() {
         const page = await context.newPage();
         await page.goto('https://www.notion.com');
 
+        console.log('Logging in');
+        
         // Click the login button
         await page.click('text=Log in');
-
-        await page.waitForLoadState();
 
         const [googlePage] = await Promise.all([
             context.waitForEvent('page'), // Start listening for new page
             page.click('div[role="button"]:has-text("Google")') // Then click the button
         ]);
-
-        // Handle Google login
-        await googlePage.waitForLoadState();
 
         // Fill in Google credentials
         await googlePage.fill('input[type="email"]', process.env.GOOGLE_EMAIL);
@@ -45,19 +42,14 @@ async function main() {
         await googlePage.fill('input[type="password"]', process.env.GOOGLE_PASSWORD);
         await googlePage.click('#passwordNext');
 
-        // Wait for navigation back to Notion
-        await googlePage.isClosed();
 
         console.log('Successfully logged in');
 
         await page.waitForSelector('#notion-app');
 
         await page.click('text=' + process.env.SETTINGS_LABEL || 'Settings');
-        await page.waitForLoadState();
         await page.click('text=' + process.env.USERS_LABEL || "Users");
-        await page.waitForLoadState();
         await page.click('div[role="tab"]:has-text("'+ ( process.env.MEMBERS_LABEL || 'Members' ) +'")');
-        await page.waitForLoadState();
 
         console.log('Successfully navigated into members');
 
