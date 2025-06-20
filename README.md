@@ -1,6 +1,7 @@
 # Notion List
 
 Hi, no big readme 👋
+This is a tool to log in to notion with a google account, and list the users
 
 ## Setup
 
